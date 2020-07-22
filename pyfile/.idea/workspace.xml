@@ -25,9 +25,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="494938fc-2ea5-41f7-a8f8-8ac0f92d7802" name="Default Changelist" comment="飞船，图片代码">
-      <change beforePath="$PROJECT_DIR$/pyGame/alien_invasion.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyGame/alien_invasion.py" afterDir="false" />
-    </list>
+    <list default="true" id="494938fc-2ea5-41f7-a8f8-8ac0f92d7802" name="Default Changelist" comment="venv中的配置文件" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -156,7 +154,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595379734627</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="venv中的配置文件">
+      <created>1595427359545</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1595427359545</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -187,7 +192,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="提交不了" />
     <MESSAGE value="飞船，图片代码" />
-    <option name="LAST_COMMIT_MESSAGE" value="飞船，图片代码" />
+    <MESSAGE value="venv中的配置文件" />
+    <option name="LAST_COMMIT_MESSAGE" value="venv中的配置文件" />
   </component>
   <component name="WindowStateProjectService">
     <state x="842" y="381" width="434" height="384" key="#Notifications" timestamp="1595346250006">
