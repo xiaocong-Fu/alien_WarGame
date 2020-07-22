@@ -2,8 +2,7 @@ import sys
 import pygame
 from pyGame.settings import Settings
 from pyGame.ship import Ship
-
-import game_functions as gf
+import pyGame.game_functions as gf
 def run_game():
     '''初始化游戏并创建对象'''
     pygame.init()
