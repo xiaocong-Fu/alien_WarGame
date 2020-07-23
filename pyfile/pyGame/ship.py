@@ -13,9 +13,12 @@ class Ship():
         self.rect.bottom = self.screen_rect.bottom                                  # 要让游戏元素与屏幕边缘对齐，可使用属性top、bottom、left或right；
                                                                                     # 要调整游戏元素的水平或垂直位置，可使用属性x和y，它们分别是相应矩形左上角的x和y坐标
         self.center = float(self.rect.centerx)
+        self.bottom = float(self.rect.bottom)
 
         self.move_right = False
         self.move_left = False
+        self.move_up = False
+        self.move_down = False
 
     def blitme(self):                                                               # 不知怎么来的，屏幕中绘制和定位飞船
         self.screen.blit(self.image,self.rect)
@@ -25,6 +28,12 @@ class Ship():
             self.center += self.ai_settings.ship_speed_factor
         if self.move_left and self.rect.left > 0:                                   # 0也可以用self.screen_rect.left代替
             self.center -= self.ai_settings.ship_speed_factor
+        if self.move_up and self.rect.top > 0:                     # self.screen_rect.up
+            self.bottom -= self.ai_settings.ship_speed_factor
+        if self.move_down and self.rect.bottom < self.screen_rect.bottom:
+            self.bottom += self.ai_settings.ship_speed_factor
+
         self.rect.centerx = self.center                                             # 将self.center的值同步给self.rect.centerx，从而改变飞船的位置
+        self.rect.bottom = self.bottom
 
 
