@@ -8,11 +8,14 @@ class Ship():
         self.ai_settings = ai_settings
 
         self.image = pygame.image.load(shipInmage_filename)                         # 加载图像
+        # self.image = pygame.transform.rotate(pygame.image.load(shipInmage_filename),90)             # 旋转图片
         self.rect = self.image.get_rect()                                           # get_rect()获取相应surface的属性rect
         self.screen_rect = self.screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx                                # centerx（飞船中心的x坐标）
         self.rect.bottom = self.screen_rect.bottom                                  # 要让游戏元素与屏幕边缘对齐，可使用属性top、bottom、left或right；
                                                                                     # 要调整游戏元素的水平或垂直位置，可使用属性x和y，它们分别是相应矩形左上角的x和y坐标
+        pygame.transform.rotate(pygame.image.load(shipInmage_filename),90)
+
         self.center = float(self.rect.centerx)
         self.bottom = float(self.rect.bottom)
 

@@ -21,15 +21,7 @@ def run_game():
         #         sys.exit()
         gf.check_events(ship,ai_settings,screen,bullets)
         ship.update()
-        bullets.update()
-        for bullet in bullets.copy():                                           # 删除已消失的子弹      copy()方法不知
-            if bullet.rect.bottom <= 0:
-                bullets.remove(bullet)
-
-
-        # screen.fill(bg_color)                                                   # 每次循环时都重绘屏幕，screen.fill()：用背景色填充屏幕
-        # ship.blitme()
-        # pygame.display.flip()
+        gf.update_bullets(bullets)
         gf.update_screen(ai_settings,screen,ship,bullets)
 
 run_game()

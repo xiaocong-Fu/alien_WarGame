@@ -4,6 +4,8 @@ from pyGame.bullet import Bullet
 
 def check_keydown_events(event,ship,ai_settings,screen,bullets):
     '''响应按键'''
+    if event.key == pygame.K_q:
+        sys.exit()
     if event.key == pygame.K_RIGHT:                                             # 按下右键向右移动
         ship.move_right = True
     if event.key == pygame.K_LEFT:                                              # 按下左键
@@ -13,10 +15,7 @@ def check_keydown_events(event,ship,ai_settings,screen,bullets):
     if event.key == pygame.K_DOWN:
         ship.move_down = True
     if event.key == pygame.K_SPACE:
-        if len(bullets) < ai_settings.bullets_allowed:                              # 限制屏幕中子弹数量
-            new_bullet = Bullet(ai_settings,screen,ship)                            # 创建子弹，并将其加入到编组bullets中
-            bullets.add(new_bullet)
-            print(len(bullets))
+        fire_bullets(ai_settings,screen,ship,bullets)
 
 def check_keyup_events(event,ship):
     '''响应松开'''
@@ -49,3 +48,18 @@ def update_screen(ai_settings,screen,ship,bullets):
         bullet.draw_bullet()
     ship.blitme()
     pygame.display.flip()
+
+
+def update_bullets(bullets):
+    '''更新子弹的位置，并删除已消失的子弹'''
+    bullets.update()
+    for bullet in bullets.copy():                                              # 删除已消失的子弹      copy()方法不知
+        if bullet.rect.bottom <= 0:
+            bullets.remove(bullet)
+
+def fire_bullets(ai_settings,screen,ship,bullets):
+    '''发射子弹'''
+    if len(bullets) < ai_settings.bullets_allowed:                              # 限制屏幕中子弹数量
+        new_bullet = Bullet(ai_settings, screen, ship)                          # 创建子弹，并将其加入到编组bullets中
+        bullets.add(new_bullet)
+        print(len(bullets))
