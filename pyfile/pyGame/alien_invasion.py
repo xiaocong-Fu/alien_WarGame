@@ -1,9 +1,9 @@
-import game_functions as gf
+import pyGame.game_functions as gf
 import pygame
-from settings import Settings
-from ship import Ship
+from pyGame.settings import Settings
+from pyGame.ship import Ship
 from pygame.sprite import Group
-from alien import Alien
+from pyGame.alien import Alien
 
 def run_game():
     '''初始化游戏并创建对象'''
@@ -17,7 +17,7 @@ def run_game():
     # alien = Alien(ai_settings,screen)
     bullets = Group()                                                                       # 创建一个用于存储子弹的编组
     aliens = Group()                                                                        # 创建一个用于存储外星人的编组
-    gf.create_fleet(ai_settings,screen,aliens)
+    gf.create_fleet(ai_settings,screen,aliens,ship)
     '''开始游戏主循环'''
     while True:
         # for event in pygame.event.get():                                        # pygame.event.get():访问Pygame检测到的事件,键盘鼠标事件
@@ -26,6 +26,7 @@ def run_game():
         gf.check_events(ship,ai_settings,screen,bullets)
         ship.update()
         gf.update_bullets(bullets)
+        gf.update_aliens(aliens,ai_settings)
         gf.update_screen(ai_settings,screen,ship,bullets,aliens)
 
 run_game()

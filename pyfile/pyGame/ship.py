@@ -2,8 +2,8 @@ import pygame
 class Ship():
     def __init__(self,screen,ai_settings):
         '''初始化飞船并设置其初始位置'''
-        # ,D:\PyCharm\PyTest\alien_WarGame\alien_WarGame\pyfile\images\ship.bmp
-        shipInmage_filename = r'D:\pythonCharm\Test\project_Game\alien_WarGame\pyfile\images\ship.bmp'
+        # D:\pythonCharm\Test\project_Game\alien_WarGame\pyfile\images\ship.bmp,
+        shipInmage_filename = r'D:\PyCharm\PyTest\alien_WarGame\alien_WarGame\pyfile\images\ship.bmp'
         self.screen = screen
         self.ai_settings = ai_settings
 
@@ -32,7 +32,7 @@ class Ship():
             self.center += self.ai_settings.ship_speed_factor
         if self.move_left and self.rect.left > 0:                                   # 0也可以用self.screen_rect.left代替
             self.center -= self.ai_settings.ship_speed_factor
-        if self.move_up and self.rect.top > 0:                     # self.screen_rect.up
+        if self.move_up and self.rect.top > 0:                                      # self.screen_rect.up
             self.bottom -= self.ai_settings.ship_speed_factor
         if self.move_down and self.rect.bottom < self.screen_rect.bottom:
             self.bottom += self.ai_settings.ship_speed_factor
