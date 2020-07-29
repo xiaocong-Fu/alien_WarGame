@@ -2,8 +2,8 @@ import pygame
 class Ship():
     def __init__(self,screen,ai_settings):
         '''初始化飞船并设置其初始位置'''
-        # D:\pythonCharm\Test\project_Game\alien_WarGame\pyfile\images\ship.bmp,
-        shipInmage_filename = r'D:\PyCharm\PyTest\alien_WarGame\alien_WarGame\pyfile\images\ship.bmp'
+        # D:\PyCharm\PyTest\alien_WarGame\alien_WarGame\pyfile\images\ship.bmp，,
+        shipInmage_filename = r'D:\pythonCharm\Test\project_Game\alien_WarGame\pyfile\images\ship.bmp'
         self.screen = screen
         self.ai_settings = ai_settings
 
@@ -39,5 +39,10 @@ class Ship():
 
         self.rect.centerx = self.center                                             # 将self.center的值同步给self.rect.centerx，从而改变飞船的位置
         self.rect.bottom = self.bottom
+
+    def center_ship(self):
+        '''飞机在屏幕上居中'''
+        self.center = self.screen_rect.centerx
+        self.bottom = self.screen_rect.bottom
 
 

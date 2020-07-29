@@ -1,7 +1,8 @@
 import sys
 import pygame
-from pyGame.bullet import Bullet
-from pyGame.alien import Alien
+from bullet import Bullet
+from alien import Alien
+from time import sleep                                                          # 函数sleep()，以便使用它来让游戏暂停
 
 def check_keydown_events(event,ship,ai_settings,screen,bullets):
     '''响应按键'''
@@ -52,12 +53,26 @@ def update_screen(ai_settings,screen,ship,bullets,aliens):
     pygame.display.flip()
 
 
-def update_bullets(bullets):
+def update_bullets(bullets,aliens,ai_settings,screen,ship):
     '''更新子弹的位置，并删除已消失的子弹'''
     bullets.update()
     for bullet in bullets.copy():                                              # 删除已消失的子弹      copy()方法不知
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
+    check_bullet_alien_collisions(bullets,aliens,ai_settings,screen,ship)
+
+
+def check_bullet_alien_collisions(bullets,aliens,ai_settings,screen,ship):
+    '''响应子弹和外星人的碰撞'''
+    # 检测子弹是否碰撞到外星人,若碰到就删除子弹和外星人
+    collisions = pygame.sprite.groupcollide(bullets, aliens, True,True)         # sprite.groupcollide()将每颗子弹的rect同每个外星人的rect进行比较,
+                                                                                # 并返回一个字典，其中包含发生了碰撞的子弹和外星人。
+                                                                                # 在这个字典中，每个键都是一颗子弹，而相应的值都是被击中的外星人.
+    # 外星人组为空则创建一批新的外星人
+    if len(aliens) == 0:
+        bullets.empty()  # empty()删除编组中余下的所有精灵，从而删除现有的所有子弹
+        create_fleet(ai_settings, screen, aliens, ship)
+
 
 def fire_bullets(ai_settings,screen,ship,bullets):
     '''发射子弹'''
@@ -115,8 +130,41 @@ def change_fleet_direction(ai_settings,aliens):
     ai_settings.fleet_direction *= -1
 
 
-def update_aliens(aliens,ai_settings):
+def ship_hit(ai_settings,stats,ship,screen,alines,bullets):
+    '''响应被外星人撞到的飞船'''
+    if stats.ships_left > 0:
+        # 将ship_left  -1
+        stats.ships_left -= 1
+        # 清空外星人列表和子弹列表
+        alines.empty()
+        bullets.empty()
+        # 创建新的外星人，并将飞船放置到原位
+        create_fleet(ai_settings,screen,alines,ship)
+        ship.center_ship()
+        # 暂停
+        sleep(1)
+    else:
+        stats.game_active = False
+
+
+def check_alien_bottom(screen,aliens,ai_settings,stats,ship,bullets):
+    '''检查是否有外星人到达屏幕底部'''
+    screen_rect = screen.get_rect()
+    for alien in aliens.sprites():
+        if alien.rect.bottom > screen_rect.bottom:
+            ship_hit(ai_settings,stats,ship,screen,aliens,bullets)
+            break
+
+
+def update_aliens(aliens,ai_settings,ship,stats,screen,bullets):
     '''更新外星人中所有外星人的位置'''
     check_fleet_edges(ai_settings,aliens)
     aliens.update()
+    # 检测外星人和飞船之间的碰撞
+    if pygame.sprite.spritecollideany(ship,aliens):                                 # spritecollideany()接受两个实参：一个精灵和一个编组。
+                                                                                    # 它检查编组是否有成员与精灵发生了碰撞，并在找到与精灵发生了碰撞的成员后就停止遍历编组
+        ship_hit(ai_settings,stats,ship,screen,aliens,bullets)
+    # 检查是否有外星人到达屏幕底部
+    check_alien_bottom(screen,aliens,ai_settings,stats,ship,bullets)
+
 

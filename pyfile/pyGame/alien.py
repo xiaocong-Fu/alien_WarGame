@@ -4,7 +4,7 @@ from pygame.sprite import Sprite
 class Alien(Sprite):
     '''单个外星人的类'''
     def __init__(self,ai_settings,screen):
-        alienImage_filename = r'D:\PyCharm\PyTest\alien_WarGame\alien_WarGame\pyfile\images\alien.bmp'
+        alienImage_filename = r'D:\pythonCharm\Test\project_Game\alien_WarGame\pyfile\images\alien.bmp'
         '''初始化外星人并设置位置'''
         super(Alien, self).__init__()
         self.screen = screen
