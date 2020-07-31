@@ -26,10 +26,8 @@ def run_game():
     gf.create_fleet(ai_settings,screen,aliens,ship)
     '''开始游戏主循环'''
     while True:
-        # for event in pygame.event.get():                                        # pygame.event.get():访问Pygame检测到的事件,键盘鼠标事件
-        #     if event.type == pygame.QUIT:
-        #         sys.exit()
-        gf.check_events(ship,ai_settings,screen,bullets,stats,play_button)
+
+        gf.check_events(ship,ai_settings,screen,bullets,stats,play_button,aliens)
         if stats.game_active:
             ship.update()
             gf.update_bullets(bullets,aliens,ai_settings,screen,ship)

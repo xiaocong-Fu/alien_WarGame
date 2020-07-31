@@ -6,7 +6,7 @@ from time import sleep                                                          
 
 def check_keydown_events(event,ship,ai_settings,screen,bullets):
     '''响应按键'''
-    if event.key == pygame.K_ESCAPE:
+    if event.key == pygame.K_ESCAPE:                                            # pygame.event.get():访问Pygame检测到的事件,键盘鼠标事件
         sys.exit()
     if event.key == pygame.K_RIGHT:                                             # 按下右键向右移动
         ship.move_right = True
@@ -31,7 +31,7 @@ def check_keyup_events(event,ship):
         ship.move_down = False
 
 
-def check_events(ship,ai_settings,screen,bullets,stats,play_button):
+def check_events(ship,ai_settings,screen,bullets,stats,play_button,aliens):
     '''响应按键和鼠标事件'''
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -42,13 +42,24 @@ def check_events(ship,ai_settings,screen,bullets,stats,play_button):
             check_keyup_events(event,ship)
         elif event.type == pygame.MOUSEBUTTONDOWN:                              # pygame.MOUSEBUTTONDOWN：鼠标点击按钮事件。
             mouse_x,mouse_y = pygame.mouse.get_pos()                            # pygame.mouse.get_pos()，它返回一个元组，其中包含玩家单击时鼠标的x和y坐标。
-            check_play_button(stats,play_button,mouse_x,mouse_y)
+            check_play_button(stats,play_button,mouse_x,mouse_y,aliens,bullets,ai_settings,screen,ship)
 
 
-def check_play_button(stats,play_button,mouse_x,mouse_y):
+def check_play_button(stats,play_button,mouse_x,mouse_y,aliens,bullets,ai_settings,screen,ship):
     '''在玩家单击Play按钮时开始新游戏'''
-    if play_button.rect.collidepoint(mouse_x,mouse_y):                          # collidepoint()检查鼠标单击位置是否在Play按钮的rect内。
+    button_clicked = play_button.rect.collidepoint(mouse_x,mouse_y)              # collidepoint()检查鼠标单击位置是否在Play按钮的rect内。
+    if button_clicked and not stats.game_active:
+        # 重置游戏统计信息
+        stats.reset_stats()
         stats.game_active = True
+        pygame.mouse.set_visible(False)                                          # 隐藏光标：set_visible()传递False，让Pygame在光标位于游戏窗口内时将其隐藏起来。
+        # 清空外星人列表和子弹列表
+        aliens.empty()
+        bullets.empty()
+        # 创建新的外星人并让飞船居中
+        create_fleet(ai_settings,screen,aliens,ship)
+        ship.center_ship()
+
 
 
 def update_screen(ai_settings,screen,ship,bullets,aliens,play_button,stats):
@@ -157,6 +168,8 @@ def ship_hit(ai_settings,stats,ship,screen,alines,bullets):
         sleep(1)
     else:
         stats.game_active = False
+        # 游戏结束显示光标
+        pygame.mouse.set_visible(True)
 
 
 def check_alien_bottom(screen,aliens,ai_settings,stats,ship,bullets):
