@@ -6,7 +6,7 @@ from time import sleep                                                          
 
 def check_keydown_events(event,ship,ai_settings,screen,bullets):
     '''响应按键'''
-    if event.key == pygame.K_q:
+    if event.key == pygame.K_ESCAPE:
         sys.exit()
     if event.key == pygame.K_RIGHT:                                             # 按下右键向右移动
         ship.move_right = True
@@ -31,7 +31,7 @@ def check_keyup_events(event,ship):
         ship.move_down = False
 
 
-def check_events(ship,ai_settings,screen,bullets):
+def check_events(ship,ai_settings,screen,bullets,stats,play_button):
     '''响应按键和鼠标事件'''
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -40,16 +40,28 @@ def check_events(ship,ai_settings,screen,bullets):
             check_keydown_events(event,ship,ai_settings,screen,bullets)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event,ship)
+        elif event.type == pygame.MOUSEBUTTONDOWN:                              # pygame.MOUSEBUTTONDOWN：鼠标点击按钮事件。
+            mouse_x,mouse_y = pygame.mouse.get_pos()                            # pygame.mouse.get_pos()，它返回一个元组，其中包含玩家单击时鼠标的x和y坐标。
+            check_play_button(stats,play_button,mouse_x,mouse_y)
 
 
+def check_play_button(stats,play_button,mouse_x,mouse_y):
+    '''在玩家单击Play按钮时开始新游戏'''
+    if play_button.rect.collidepoint(mouse_x,mouse_y):                          # collidepoint()检查鼠标单击位置是否在Play按钮的rect内。
+        stats.game_active = True
 
-def update_screen(ai_settings,screen,ship,bullets,aliens):
+
+def update_screen(ai_settings,screen,ship,bullets,aliens,play_button,stats):
     '''更新屏幕上的图像，并切换到新屏幕'''
     screen.fill(ai_settings.bg_color)
     for bullet in bullets.sprites():                                           # 绘制所有子弹
         bullet.draw_bullet()
     ship.blitme()
     aliens.draw(screen)
+    # 若游戏非活跃状态,就绘制Play按钮
+    if not stats.game_active:                                                   # 为让Play按钮显示在所有元素之上，绘制完其他元素后，最后在绘制Play按钮
+        play_button.draw_button()
+
     pygame.display.flip()
 
 
