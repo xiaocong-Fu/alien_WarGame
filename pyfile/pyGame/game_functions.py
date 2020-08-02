@@ -1,7 +1,7 @@
 import sys
 import pygame
-from bullet import Bullet
-from alien import Alien
+from pyGame.bullet import Bullet
+from pyGame.alien import Alien
 from time import sleep                                                          # 函数sleep()，以便使用它来让游戏暂停
 
 def check_keydown_events(event,ship,ai_settings,screen,bullets):
@@ -52,6 +52,8 @@ def check_play_button(stats,play_button,mouse_x,mouse_y,aliens,bullets,ai_settin
         # 重置游戏统计信息
         stats.reset_stats()
         stats.game_active = True
+        # 重置游戏
+        ai_settings.initialize_dynamic_settings()
         pygame.mouse.set_visible(False)                                          # 隐藏光标：set_visible()传递False，让Pygame在光标位于游戏窗口内时将其隐藏起来。
         # 清空外星人列表和子弹列表
         aliens.empty()
@@ -93,7 +95,9 @@ def check_bullet_alien_collisions(bullets,aliens,ai_settings,screen,ship):
                                                                                 # 在这个字典中，每个键都是一颗子弹，而相应的值都是被击中的外星人.
     # 外星人组为空则创建一批新的外星人
     if len(aliens) == 0:
-        bullets.empty()  # empty()删除编组中余下的所有精灵，从而删除现有的所有子弹
+        bullets.empty()                                                         # empty()删除编组中余下的所有精灵，从而删除现有的所有子弹
+        # 加快游戏节奏
+        ai_settings.increase_speed()
         create_fleet(ai_settings, screen, aliens, ship)
 
 
