@@ -1,9 +1,12 @@
 import pygame
-class Ship():
+from pygame.sprite import Sprite
+
+class Ship(Sprite):
     def __init__(self,screen,ai_settings):
         '''初始化飞船并设置其初始位置'''
-        # ，D:\pythonCharm\Test\project_Game\alien_WarGame\pyfile\images\ship.bmp,
-        shipInmage_filename = r'D:\PyCharm\PyTest\alien_WarGame\alien_WarGame\pyfile\images\ship.bmp'
+        super(Ship, self).__init__()
+        # ，,D:\PyCharm\PyTest\alien_WarGame\alien_WarGame\pyfile\images\ship.bmp
+        shipInmage_filename = r'D:\pythonCharm\Test\project_Game\alien_WarGame\pyfile\images\ship.bmp'
         self.screen = screen
         self.ai_settings = ai_settings
 
